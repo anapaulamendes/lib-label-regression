@@ -16,6 +16,21 @@ import label_regression
 label_regression.call(dataset, d, t, kernel, c, gamma)
 ```
 
+*Exemplo Prático*
+
+```
+>>> import label_regression
+>>> label_regression.call("./databases/iris.csv", 0.1, 0.2, 'linear', 100, 'auto')
+
+------------ Rótulos dos grupos para base de dados Iris ------------
+
+   Cluster      Atributo  min_faixa  max_faixa  Precision
+0      1.0  petal_length        1.0        1.9       1.00
+0      2.0  petal_length        3.0        5.1       1.00
+1      2.0   petal_width        1.0        1.8       1.00
+0      3.0  petal_length        4.9        6.9       0.94
+```
+
 Descrição dos parâmetros:
 
  - dataset (string): Caminho para a base de dados que será utilizada. A base deve estar classificada. A classe de rótulos deve possuir o nome da coluna: classe
