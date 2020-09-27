@@ -10,6 +10,7 @@ O objetivo é transformar o código feito no trabalho "Rotulação Automática d
 
 ## Uso:
 
+
 ```
 >>> from label_regression import LabelRegression
 >>> from sklearn.datasets import load_iris
@@ -45,6 +46,9 @@ O objetivo é transformar o código feito no trabalho "Rotulação Automática d
 
 Descrição dos parâmetros:
 
+ *LabelRegression(attribute_names, X, Y, d, t, kernel, c, gamma)*
+
+ - attribute_names (list): Uma lista com o nome de todos os atributos da base.
  - X ({array-like, sparse matrix} do shape (n_samples, n_features)): O conjunto de treinamento, sem os rótulos de classe.
  - y (array-like of shape (n_samples,) ou (n_samples, n_outputs)): Os rótulos de classe.
  - d (float): A diferença máxima entre as curvas. A faixa de valores é de 0 a 1.
