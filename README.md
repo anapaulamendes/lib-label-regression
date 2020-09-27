@@ -11,29 +11,27 @@ O objetivo é transformar o código feito no trabalho "Rotulação Automática d
 ## Uso:
 
 ```
-import label_regression
-
-label_regression.call(dataset, d, t, kernel, c, gamma)
-```
-
-*Exemplo Prático*
-
-```
->>> import label_regression
->>> label_regression.call("./databases/iris.csv", 0.1, 0.2, 'linear', 100, 'auto')
-
------------- Rótulos dos grupos para base de dados Iris ------------
-
-   Cluster      Atributo  min_faixa  max_faixa  Precision
-0      1.0  petal_length        1.0        1.9       1.00
-0      2.0  petal_length        3.0        5.1       1.00
-1      2.0   petal_width        1.0        1.8       1.00
-0      3.0  petal_length        4.9        6.9       0.94
+>>> from label_regression import LabelRegression
+>>> from sklearn.datasets import load_iris
+>>> iris = load_iris()
+>>> lr = LabelRegression(iris.data, iris.target, 0.1, 0.2, 'linear', 100, 'auto')
+>>> lr.getLabels()
+   Cluster  Atributo  min_faixa  max_faixa  Precision
+0      0.0       2.0        1.0        1.9        1.0
+0      1.0       2.0        3.0        5.1        1.0
+1      1.0       3.0        1.0        1.8        1.0
+0      2.0       3.0        1.8        2.5        0.9
+>>> lr.getAccuracy()
+   Cluster   AR
+0      0.0  1.0
+1      1.0  1.0
+2      2.0  0.9
 ```
 
 Descrição dos parâmetros:
 
- - dataset (string): Caminho para a base de dados que será utilizada. A base deve estar classificada. A classe de rótulos deve possuir o nome da coluna: classe
+ - X ({array-like, sparse matrix} do shape (n_samples, n_features)): O conjunto de treinamento, sem os rótulos de classe.
+ - y (array-like of shape (n_samples,) ou (n_samples, n_outputs)): Os rótulos de classe.
  - d (float): A diferença máxima entre as curvas. A faixa de valores é de 0 a 1.
  - t (float): O erro aceitável. A faixa de valores é de 0 a 1.
  - kernel (string): Especifica o tipo de kernel a ser usado no algoritmo de regressão. Deve ser 'linear', 'poly', 'rbf', 'sigmoid', 'precomputed' ou chamável. Se nenhum for fornecido, 'rbf' será usado. Se um chamável for fornecido, ele será usado para pré-calcular a matriz do kernel. Este parâmetro é primário da biblioteca scikit-learn. Para mais informações, acesse: https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVR.html

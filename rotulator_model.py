@@ -70,17 +70,18 @@ def _intersections( attrRangeByGroup, polynomials):
 		d = {}
 		inter = []
 
-		clusters = list(combinations(attrRangeByGroup['Cluster'].unique(),2))
+		clusters = list(combinations(attrRangeByGroup['Cluster'].unique(), 2))
+
 		for c in clusters:
-			x_max = values[(values['Cluster']==c[0]) | (values['Cluster']==c[1])].min()['maxValue']
-			x_min = values[(values['Cluster']==c[0]) | (values['Cluster']==c[1])].max()['minValue']
-			if x_min<x_max:
+			x_max = values[(values['Cluster'] == c[0]) | (values['Cluster'] == c[1])].min()['maxValue']
+			x_min = values[(values['Cluster'] == c[0]) | (values['Cluster'] == c[1])].max()['minValue']
+			if x_min < x_max:
 				"""divide o intervalo em 5 partes iguais"""
-				xx = np.linspace(x_min,x_max, num=5)
+				xx = np.linspace(x_min, x_max, num=5)
 
 				"""seleciona os polinômios dos grupos c[0] e c[1]"""
-				poly1 = polynomials[attr][str(c[0])]
-				poly2 = polynomials[attr][str(c[1])]
+				poly1 = polynomials[attr][c[0]]
+				poly2 = polynomials[attr][c[1]]
 
 				"""calcula as interseções em cada intervalo"""
 				for x0 in xx:
@@ -107,7 +108,7 @@ def _get_groups( a, b, data, d, polynomials, erroFaixa, attr, sentido, extendend
 		"""calcula o erro para cada cluster"""
 		errors = []
 		for k in clusters:
-			errors.append((k, integrate.quad(np.poly1d(polynomials[str(k)]), a, b)[0]))
+			errors.append((k, integrate.quad(np.poly1d(polynomials[k]), a, b)[0]))
 		errors.sort(key=lambda tup: tup[1], reverse=False)
 
 		"""seleciona os grupos para os quais a faixa será atribuída com base no parâmetro d"""

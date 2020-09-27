@@ -14,8 +14,8 @@ def _label(rangeAUC, V, db):
 	labels = (pd.DataFrame(columns=accuratedRange.columns)
 		.astype({'min_faixa': 'float64', 'min_faixa': 'float64', 'Precision': 'float64'}))
 
-	results = (pd.DataFrame(columns=['Cluster', 'Accuracy'])
-		.astype({'Accuracy': 'float64'}))
+	results = (pd.DataFrame(columns=['Cluster', 'AR'])
+		.astype({'AR': 'float64'}))
 
 	rotulation_process = pd.DataFrame(columns=['Cluster', 'iteracao', 'acuracias'])
 

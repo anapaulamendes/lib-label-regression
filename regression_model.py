@@ -30,7 +30,7 @@ class _TrainingModels:
 			"""
 			model = SVR(kernel='linear', C=100, gamma='auto')
 			"""
-			model = SVR(kernel=kernel, C=C, gamma=gamma)
+			model = SVR(kernel=kernel, C=c, gamma=gamma)
 
 			Y = normalBD[attr]
 			X = normalBD.drop(attr, axis=1)
