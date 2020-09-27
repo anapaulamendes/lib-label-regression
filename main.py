@@ -21,18 +21,21 @@ def _poly_apro(results):
 
 	return polynomials
 
-def _import_dataset(X, Y):
+def _import_dataset(attr_names, X, Y):
 	"""
 	Gera o DataFrame a partir dos atributos(X) do grupo(Y).
 	"""
 	dataset = pd.DataFrame(data=X)
 	dataset['classe'] = Y
+	if attr_names != None:
+		attr_names.append('classe')
+		dataset.columns = attr_names
 
 	"""
-	Refaz o x e y para serem reconhecido pelos métodos do pandas para df
+	Refaz o x para ser reconhecido pelos métodos do pandas para df
 	"""
 
-	y = dataset.loc[:,'classe']
+	y = dataset.loc[:, 'classe']
 	x = dataset.drop('classe', axis=1)
 
 	"""
@@ -75,9 +78,9 @@ def _call_predictions(X, Y, XNormal, kernel, c, gamma):
 	""" models._erros, models._metrics """
 	return yy
 
-def _main(x, y, curves_diff, acceptable_error, kernel, c, gamma):
+def _main(attr_names, x, y, curves_diff, acceptable_error, kernel, c, gamma):
 
-	db, X, Y, XNormal = _import_dataset(x, y)
+	db, X, Y, XNormal = _import_dataset(attr_names, x, y)
 	yy = _call_predictions(X, Y, XNormal, kernel, c, gamma)
 	errorByValue = (yy.groupby(['Atributo', 'Cluster', 'Actual'])['Erro'].agg({'ErroMedio': np.average})
 		.reset_index()
@@ -89,4 +92,4 @@ def _main(x, y, curves_diff, acceptable_error, kernel, c, gamma):
 	relevanteRanges = _range_delimitation(attrRangeByGroup, polynomials, curves_diff)
 	ranged_attr, results, labels, rotulation_process = _label(relevanteRanges, acceptable_error, db)
 
-	return (labels, results)
+	return (labels.drop('Precision', axis=1), results, ranged_attr)
